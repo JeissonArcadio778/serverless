@@ -1,0 +1,41 @@
+service: lmd-crud-node
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+  # Permissions/role for use DynamoDB
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: 
+            - dynamodb:*
+          Resource:
+            - arn:aws:dynamodb:us-east-1:788950990295:table/TaskTable
+
+#This is the router (like express):
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
+
+# Create Table DynamoDB: 
+
+resources: 
+  Resources: 
+    TaskTable: 
+      Type: AWS::DynamoDB::Table
+      Properties: 
+        TableName: TaskTable
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions: 
+          - AttributeName: id
+            AttributeType: S
+        KeySchema: 
+          - AttributeName: id
+            KeyType: HASH

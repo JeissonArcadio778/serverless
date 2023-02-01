@@ -1,16 +1,9 @@
 'use strict';
 
-module.exports.hello = async (event) => {
+module.exports.hello = (event) => {
   console.log('This is a log. Hello log');
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Hey again. How are u?! This is a modification =). Hello World. I will fight for my dreams',
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
+  setTimeout(() => {
+    console.log("Delayed for 4 second.");
+  }, 4000)
+  return "Hello World"
 };
